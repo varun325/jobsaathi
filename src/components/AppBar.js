@@ -14,14 +14,15 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+import { useNavigate } from "react-router-dom";
+import BusinessRoundedIcon from '@mui/icons-material/BusinessRounded';
 const drawerWidth = 240;
 const navItems = [
-  "Home",
-  "Charts",
-  "Spreadsheet",
-  "Import Spreadsheet",
-  "Export Spreadsheet",
+  { name: "Home", path: "/" },
+  { name: "Charts", path: "/charts" },
+  { name: "Spreadsheet", path: "/spreadsheet" },
+  { name: "Import Table", path: "/importspreadsheet" },
+  { name: "Export Table", path: "/exportspreadsheet" },
 ];
 
 function DrawerAppBar(props) {
@@ -32,23 +33,32 @@ function DrawerAppBar(props) {
     setMobileOpen((prevState) => !prevState);
   };
 
+  const navigate = useNavigate();
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <BusinessRoundedIcon sx={{ mr: 1 }} /> {/* Adjust the margin as needed */}
         JOBSAATHI
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <ListItemText primary={item} />
+          <ListItem key={item.name} disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "center" }}
+              onClick={() => {
+                navigate(item.path);
+              }}
+            >
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
     </Box>
   );
+  
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -70,14 +80,21 @@ function DrawerAppBar(props) {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
+            sx={{ flexGrow: 1, display: { xs: "none", sm: "flex" },alignItems: 'left' ,justifyContent: 'left'}}
           >
+            <BusinessRoundedIcon sx={{ mr: 1 }}></BusinessRoundedIcon>
             JOBSAATHI
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                {item}
+              <Button
+                key={item.name}
+                sx={{ color: "#fff" }}
+                onClick={() => {
+                  navigate(item.path);
+                }}
+              >
+                {item.name}
               </Button>
             ))}
           </Box>

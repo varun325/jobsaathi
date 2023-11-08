@@ -15,6 +15,7 @@ import {
 } from "../constants/options";
 import { saveToStorage } from "../helpers/storeOperations";
 const { ipcRenderer } = window.require("electron");
+// const ipcRenderer= {};
 
 function Form() {
   const [formData, setFormData] = useState({
