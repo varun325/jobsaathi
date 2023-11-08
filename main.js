@@ -1,22 +1,22 @@
-const { app, BrowserWindow,ipcMain } = require('electron');
-const path = require('path');
-const Store = require('electron-store');
+const { app, BrowserWindow, ipcMain } = require("electron");
+const path = require("path");
+const Store = require("electron-store");
 // run this as early in the main process as possible
-if (require('electron-squirrel-startup')) app.quit();
+if (require("electron-squirrel-startup")) app.quit();
 
 //define the store
 
 const store = new Store();
 //Listener for data coming from JSX
-ipcMain.on('electron-store-set', async (event, arg) => {
-  const table = store.get('table') || [];
-  const newTable = table.filter(item => item.jobId!==arg.jobId);
+ipcMain.on("electron-store-set", async (event, arg) => {
+  const table = store.get("table") || [];
+  const newTable = table.filter((item) => item.jobId !== arg.jobId);
   newTable.push(arg);
-  store.set('table', newTable);
-  console.log('store : ', store.get('table'));
+  store.set("table", newTable);
+  console.log("store : ", store.get("table"));
 });
 
-ipcMain.on('electron-store-get', async (event, val) => {
+ipcMain.on("electron-store-get", async (event, val) => {
   event.returnValue = store.get(val);
 });
 
@@ -32,13 +32,13 @@ function createWindow() {
       enableRemoteModule: true,
       contextIsolation: false,
       nodeIntegrationInWorker: true,
-      nodeIntegrationInSubFrames: true
-  }
+      nodeIntegrationInSubFrames: true,
+    },
   });
 
   // Log the resolved path to the 'build' directory
-  const indexPath = path.join(__dirname, 'build', 'index.html');
-  console.log('Resolved index.html path:', indexPath);
+  const indexPath = path.join(__dirname, "build", "index.html");
+  console.log("Resolved index.html path:", indexPath);
 
   mainWindow.loadFile(indexPath);
 }

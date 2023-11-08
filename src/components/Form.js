@@ -14,7 +14,7 @@ import {
   careerLevelOptions,
 } from "../constants/options";
 import { saveToStorage } from "../helpers/storeOperations";
-const { ipcRenderer } = window.require('electron');
+const { ipcRenderer } = window.require("electron");
 
 function Form() {
   const [formData, setFormData] = useState({
@@ -173,7 +173,7 @@ function Form() {
                   color="primary"
                   onClick={() => {
                     // console.log(JSON.stringify(formData, null, 2));
-                    saveToStorage(formData,ipcRenderer);
+                    saveToStorage(formData, ipcRenderer);
                   }}
                 >
                   Submit
